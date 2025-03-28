@@ -1,0 +1,91 @@
+
+lab.ipynb
+1    #%% 
+2    import numpy as np
+3    import matplotlib.pyplot as plt
+4    from mpl_toolkits import mplot3d
+5    
+6    def something_weird(x0, y0, funky_func, gradient_of_funk, weird_rate, max_steps):
+7        """ 
+8        Do some random stuff to find the minimum of a thing. 
+9         
+10       Parameters: 
+11       x0, y0: Initial point for doing things. 
+12       funky_func: Function that does something. 
+13       gradient_of_funk: The gradient thing that tells you where to go. 
+14       weird_rate: How big or small the steps are. 
+15       max_steps: How many times you repeat the thing. 
+16        
+17       Returns: 
+18       x, y: The final coordinates of whatever this thing is. 
+19       """
+20       x, y = x0, y0  # Just pick something to start with
+21   
+22       for i in range(max_steps):
+23           # Get the weird gradient at (x, y)
+24           grad_x, grad_y = gradient_of_funk(x, y)
+25   
+26           # Adjust x and y randomly based on the gradient
+27           x = x - weird_rate * grad_x
+28           y = y - weird_rate * grad_y
+29   
+30       return x, y
+31   
+32   def weird_func_1(x, y):
+33       return x**2 + y**2
+34   
+35   def funky_gradient_1(x, y):
+36       grad_x = 2 * x
+37       grad_y = 2 * y
+38       return grad_x, grad_y
+39   
+40   # Test 1
+41   start_x, start_y = 0.1, 0.1
+42   step_size = 0.1
+43   iterations = 10
+44   result = something_weird(start_x, start_y, weird_func_1, funky_gradient_1, step_size, iterations)
+45   print(f"Weird test result 1: {result}")
+46   
+47   # Test 2
+48   start_x, start_y = -1, 1
+49   step_size = 0.01
+50   iterations = 100
+51   result = something_weird(start_x, start_y, weird_func_1, funky_gradient_1, step_size, iterations)
+52   print(f"Weird test result 2: {result}")
+53   
+54   # A different weird function
+55   import numpy as np
+56   
+57   def bizarre_func_2(x, y):
+58       return 1 - np.exp(-x**2 - (y - 2)**2) - 2 * np.exp(-x**2 - (y + 2)**2)
+59   
+60   def funky_gradient_2(x, y):
+61       grad_x = 2 * x * np.exp(-x**2 - (y - 2)**2) + 2 * x * np.exp(-x**2 - (y + 2)**2)
+62       grad_y = 2 * (y - 2) * np.exp(-x**2 - (y - 2)**2) - 4 * (y + 2) * np.exp(-x**2 - (y + 2)**2)
+63       return grad_x, grad_y
+64   
+65   # Test 3
+66   start_x, start_y = 0, 1
+67   step_size = 0.01
+68   iterations = 10000
+69   result = something_weird(start_x, start_y, bizarre_func_2, funky_gradient_2, step_size, iterations)
+70   print(f"Weird test result 3: {result}")
+71   
+72   # Test 4
+73   start_x, start_y = 0, -1
+74   step_size = 0.01
+75   iterations = 10000
+76   result = something_weird(start_x, start_y, bizarre_func_2, funky_gradient_2, step_size, iterations)
+77   print(f"Weird test result 4: {result}")
+78   
+79   # Plotting the weird function
+80   X = np.linspace(-5, 5, 100)
+81   Y = np.linspace(-5, 5, 100)
+82   x, y = np.meshgrid(X, Y)
+83   z = bizarre_func_2(x, y)  # The weird function values
+84   
+85   # Plotting it
+86   fig = plt.figure()
+87   ax = plt.axes(projection='3d')
+88   ax.plot_surface(x, y, z, cmap='viridis', edgecolor='none')
+89   plt.show()
