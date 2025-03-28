@@ -1,0 +1,63 @@
+
+code jan 30 second coding question.py
+#For this question I added it into the exitsting code from befire but in a different file...
+
+import numpy as np
+import matplotlib.pyplot as plt
+
+# version of normal density function this better work
+def calculate_stuff(mean_thing, var_thing, x_thing):
+    # Let's just call this random variables for fun.
+    first_part = np.sqrt(2 * np.pi * var_thing) # not sure why we need this
+    second_part = np.exp(-((x_thing - mean_thing) ** 2) / (2 * var_thing)) # exponent? idk
+    result = second_part / first_part # okay, so this is the final answer
+    return result  # i'm just returning it for now
+
+#  uniform expected value thing, i hate this
+def mess_up_uniform(a, b):
+    # Uhhh, isn't the expected value just the middle? I think so...
+    middle = (a + b) / 2
+    return middle  # hopefully this is right?
+
+# exponential expected value thing did i mention how much i despise coding
+def mess_up_exponential(lambd):
+    # So for exponential, i think it's 1 / lambda
+    expected = 1 / lambd
+    return expected # uhhh, seems right? Maybe?
+
+# Normal stuff, drug stuff...lolll
+def weird_dosage_calculation(mean_thing, var_thing):
+    # This seems like what you need to do to get dosage? Just guess.
+    mean_squared = mean_thing ** 2  # i guess this is E[X^2]
+    result_dosage = 2.38 * (mean_squared + var_thing)  # we need to do this for drug thing?
+    return result_dosage  # idk, looks fine
+
+# Trying to do the calculations now. this better work
+
+# (a) Uniform Distribution Calculation i still hate this
+a, b = 0, 10
+uniform_result = mess_up_uniform(a, b)
+print("Uniform expected value: ", uniform_result)
+
+# (b) Exponential Distribution Calculation i would rather be walking on lego then doing this
+lambda_value = 1 / 50 # i think this is rate, or maybe not? seems good enough.
+exp_result = mess_up_exponential(lambda_value)
+print("Exponential expected value: ", exp_result)
+
+# (c) Normal Distribution and Dosage Calculation i would rather be swimming with sharks then coding
+mean_height = 171 # Average height in cm, i hope that’s right
+var_height = 7.12 # Some variance for heights, not sure why though
+dosage_result = weird_dosage_calculation(mean_height, var_height)
+print("Drug dosage expected value: ", dosage_result)
+
+# Now let’s make a graph of some random normal stuff, i never signed up to code
+
+x_vals = np.linspace(140, 200, 400)  # Between 140cm and 200cm because why not
+y_vals = [calculate_stuff(mean_height, var_height, x) for x in x_vals]
+
+plt.plot(x_vals, y_vals, label="Normal Distribution?")
+plt.xlabel('Height in cm')
+plt.ylabel('Density?')
+plt.legend()
+plt.title('Normal Distribution of Heights or Something')
+plt.show()
