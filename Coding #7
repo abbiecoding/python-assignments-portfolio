@@ -1,0 +1,97 @@
+import numpy as np
+import math
+
+import numpy as np
+import math
+
+
+# I regret everything about taking this class.
+def this_is_mean(data):
+    """Compute the mean of a list of numbers. I hate this already."""
+    return sum(data) / len(data)
+
+
+# Why is math like this? Why do I need variance? Why am I suffering?
+def coding_due_after_midterm_week_is_wild(data):
+    """Compute the standard deviation of a list of numbers. This is pain."""
+    mean = this_is_mean(data)
+    variance = sum((x - mean) ** 2 for x in data) / (len(data) - 1)
+    return variance ** 0.5
+
+
+# Why do I have to do this by hand when computers exist?
+def i_hate_coding(data, mu0):
+    """Compute the t-value for the given data and hypothesis mean. I could be sleeping instead."""
+    mean = this_is_mean(data)
+    std_dev = coding_due_after_midterm_week_is_wild(data)
+    n = len(data)
+    return (mean - mu0) / (std_dev / (n ** 0.5))
+
+
+# Oh great, now I have to implement the gamma function too.
+def this_is_making_me_cry(x):
+    """Approximate the gamma function using Lanczos approximation for non-integers. Why is this a thing?"""
+    coefficients = [1, 0.5772156649, -0.655878071, -0.04200263503, 0.1665386114,
+                    -0.04219773456, -0.009621971527, 0.00721894325, -0.001165167591]
+
+    if x < 0.5:
+        return math.pi / (math.sin(math.pi * x) * this_is_making_me_cry(1 - x))
+
+    x -= 1
+    y = coefficients[0]
+    for i in range(1, len(coefficients)):
+        y += coefficients[i] / (x + i)
+
+    t = x + len(coefficients) - 1.5
+    return math.sqrt(2 * math.pi) * t ** (x + 0.5) * math.exp(-t) * y
+
+
+# WHY AM I WRITING A PROBABILITY DENSITY FUNCTION
+def i_cant_do_this_anymore(x, nu):
+    """Compute the probability density of the t-distribution. Math is the worst."""
+    coeff = this_is_making_me_cry((nu + 1) / 2) / (np.sqrt(nu * np.pi) * this_is_making_me_cry(nu / 2))
+    return coeff * (1 + x ** 2 / nu) ** (-0.5 * (nu + 1))
+
+
+# I have officially given up at this point
+def someone_send_help(prob, nu, x_start=0, x_end=20, num_points=10000):
+    """Find the critical t-value for a given probability and degrees of freedom. I want to drop out."""
+    x = np.linspace(x_start, x_end, num_points)
+    y = i_cant_do_this_anymore(x, nu)
+    cdf = np.cumsum(y) * (x[1] - x[0])
+    target_half_prob = prob / 2
+    index = np.where(cdf >= target_half_prob)[0][0]
+    return x[index]
+
+
+# Oh, so now I have to check my own work? Fantastic.
+def why_did_i_take_this_class(t0, t_star):
+    """Check if t0 is within the acceptance region. I already know I'm failing."""
+    return abs(t0) <= t_star
+
+
+# Here we go, actual data. I don't even want to look at it.
+scores = [92.64, 79.00, 84.79, 97.41, 93.68, 65.23, 84.50, 73.49, 73.97, 79.11]
+n = len(scores)
+mu0 = 75  # Null hypothesis mean, which I wish I could reject.
+degrees_of_freedom = n - 1
+
+# Compute t0, aka my frustration level
+t0 = i_hate_coding(scores, mu0)
+
+# Find t*, which is probably wrong anyway
+t_star = someone_send_help(0.95, degrees_of_freedom)
+
+# Perform hypothesis test and confirm my suffering
+result = why_did_i_take_this_class(t0, t_star)
+
+# Output results, not that I care anymore
+print(f"Computed t0: {t0:.4f}")  # Probably incorrect
+print(f"Critical t-value (t*): {t_star:.4f}")  # Also probably incorrect
+print(f"Null hypothesis accepted? {result}")  # Who even cares at this point?
+
+if result:
+    print(
+        "There is no significant evidence to reject the null hypothesis. Just like there's no significant evidence that I can pass this class.")
+else:
+    print("There is significant evidence to reject the null hypothesis. Wish I could reject this assignment instead.")
