@@ -1,0 +1,79 @@
+
+CODE KRITIK.py
+1    import matplotlib.pyplot as plt
+2    import random
+3    
+4    # Okay, so here are some points, I guess? Maybe they're important?
+5    #this is going to make me cry
+6    triangle_points = [(0, 0), (1, 0), (0.5, 0.866)]  # This is the triangle, I think?
+7    
+8    #im already done with this and have coded 1 LINE
+9    # This function... um, checks if a point is in the triangle? Seems legit
+10   def does_this_make_sense(x1, y1, x2, y2, x3, y3, x, y):
+11       def calculate_area(x1, y1, x2, y2, x3, y3):
+12           return abs((x1 * (y2 - y3) + x2 * (y3 - y1) + x3 * (y1 - y2)) / 2.0)
+13   
+14       total_area = calculate_area(x1, y1, x2, y2, x3, y3)
+15       area1 = calculate_area(x, y, x2, y2, x3, y3)
+16       area2 = calculate_area(x1, y1, x, y, x3, y3)
+17       area3 = calculate_area(x1, y1, x2, y2, x, y)
+18   
+19       # I think this checks if the point is inside or outside?
+20       return total_area == area1 + area2 + area3
+21   
+22   
+23   # Okay, so now I guess I need to get a starting point? Something inside the triangle? I hope this works...
+24   while True:
+25       try:
+26           starting_x = float(input("Uh... what's the x-coordinate for the starting point? "))
+27           starting_y = float(input("And the y-coordinate? Please don't make this hard... "))
+28   
+29           if does_this_make_sense(0, 0, 1, 0, 0.5, 0.866, starting_x, starting_y):
+30               print("I think this is a good starting point... maybe.")
+31               break
+32           else:
+33               print("Uh oh, that point isn’t inside the triangle. Try again, please work this time.")
+34       except ValueError:
+35           print("Oops, that wasn't a number a horrible number actually. Can you try again or dont?")
+36   
+37   # So... this is the point we’re going to start from. Seems fine.
+38   starting_point = (starting_x, starting_y)
+39   
+40   # Alright, now we need to know how many steps... I guess?
+41   while True:
+42       try:
+43           steps_count = int(input("How many steps should we take who actually knows? I'm hoping for a big number like more then zeroo... "))
+44           if steps_count > 0:
+45               print(f"Okay, {steps_count} steps... let's go with that... i think!")
+46               break
+47           else:
+48               print("Please give me a positive number, or this won't work, ot probably wont work if it is a positive number.")
+49       except ValueError:
+50           print("I need a number, please please please (like the song). No letters or weird symbols .")
+51   
+52   # Time for the "Chaos Game" thing, or whatever it's called
+53   points = [starting_point]
+54   
+55   for i in range(steps_count):
+56       # Pick a random point... um, I think the triangle's corners are a good bet?
+57       next_vertex = random.choice(triangle_points)
+58   
+59       # So, like, move halfway toward that point from where we are? Sounds good
+60       last_position = points[-1]
+61       next_position = ((last_position[0] + next_vertex[0]) / 2, (last_position[1] + next_vertex[1]) / 2)
+62   
+63       # Add this new position to the list of points (I hope that's right)
+64       points.append(next_position)
+65   
+66   
+67   # Now I have to plot these points, I think? I hope this works, lol
+68   def plot_this_mess(points):
+69       # Just starting from the 12th point to make it look cooler, I guess?
+70       plt.scatter([p[0] for p in points[12:]], [p[1] for p in points[12:]], s=0.1)
+71       plt.show()
+72   
+73   
+74   # Okay, here’s the moment of truth: plotting time! you better work
+75   plot_this_mess(points)
+76   #biggest shock of my life it worked
+77   #i still hate coding
