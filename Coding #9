@@ -1,0 +1,112 @@
+import sympy as sp
+
+# Define symbols
+Florida, Georgia = sp.symbols('Florida Georgia')
+
+# Define the function f(Florida, Georgia)
+f = sp.exp(Florida) * sp.sin(Georgia) + Georgia**3
+
+# Compute the first partial derivatives
+df_Florida = sp.diff(f, Florida)
+df_Georgia = sp.diff(f, Georgia)
+
+# Display the partial derivatives
+df_Florida, df_Georgia
+
+#%%
+import sympy as sp
+
+# Define symbols (with names of places in Canada)
+Toronto, Vancouver = sp.symbols('Toronto Vancouver')
+
+# Define the function g(Toronto, Vancouver)
+g = Toronto**2 * Vancouver + Toronto * Vancouver**2
+
+# Compute the partial derivatives
+dg_Toronto = sp.diff(g, Toronto)
+dg_Vancouver = sp.diff(g, Vancouver)
+
+# Gradient vector
+grad_g = sp.Matrix([dg_Toronto, dg_Vancouver])
+
+# Evaluate the gradient at the point (1, -1)
+grad_at_point = grad_g.subs({Toronto: 1, Vancouver: -1})
+
+# Compute the magnitude of the gradient
+magnitude_grad = sp.sqrt(grad_at_point[0]**2 + grad_at_point[1]**2)
+
+# Display the results
+grad_g, grad_at_point, magnitude_grad
+
+#%%
+import sympy as sp
+
+# Define symbols (with names of places in Africa)
+Cairo, Lagos = sp.symbols('Cairo Lagos')
+
+# Define the function h(Cairo, Lagos)
+h = sp.ln(Cairo**2 + Lagos**2)
+
+# Compute the second partial derivatives
+d2h_Cairo2 = sp.diff(h, Cairo, 2)
+d2h_Lagos2 = sp.diff(h, Lagos, 2)
+d2h_CairoLagos = sp.diff(h, Cairo, Lagos)
+
+# Display the second partial derivatives
+d2h_Cairo2, d2h_Lagos2, d2h_CairoLagos
+
+#%%
+import numpy as np
+import matplotlib.pyplot as plt
+import sympy as sp
+
+# Define symbols (places in Asia)
+Tokyo, Seoul = sp.symbols('Tokyo Seoul')
+
+# Define the function j(Tokyo, Seoul)
+j = Tokyo**3 - 3*Tokyo*Seoul + Seoul**3
+
+# Convert the SymPy expression to a numerical function
+j_func = sp.lambdify((Tokyo, Seoul), j, 'numpy')
+
+# Create a grid of Tokyo and Seoul values and evaluate j on this grid
+Tokyo_vals = np.linspace(-3, 3, 400)
+Seoul_vals = np.linspace(-3, 3, 400)
+X, Y = np.meshgrid(Tokyo_vals, Seoul_vals)
+Z = j_func(X, Y)
+
+# Plot the contour
+plt.contourf(X, Y, Z, levels=50, cmap='viridis')
+plt.colorbar()
+plt.title('Contour plot of $j(Tokyo, Seoul) = Tokyo^3 - 3*Tokyo*Seoul + Seoul^3$')
+plt.xlabel('$Tokyo$')
+plt.ylabel('$Seoul$')
+plt.show()
+
+#%%
+import numpy as np
+import matplotlib.pyplot as plt
+import sympy as sp
+
+# Define symbols (super unique places)
+Atlantis, Elysium = sp.symbols('Atlantis Elysium')
+
+# Define a creative and unique function
+k = sp.exp(-Atlantis**2 - Elysium**2) * sp.sin(Atlantis) * sp.cos(Elysium)
+
+# Convert the SymPy expression to a numerical function
+k_func = sp.lambdify((Atlantis, Elysium), k, 'numpy')
+
+# Create a grid of Atlantis and Elysium values and evaluate k on this grid
+Atlantis_vals = np.linspace(-3, 3, 400)
+Elysium_vals = np.linspace(-3, 3, 400)
+X, Y = np.meshgrid(Atlantis_vals, Elysium_vals)
+Z = k_func(X, Y)
+
+# Plot the contour
+plt.contourf(X, Y, Z, levels=50, cmap='viridis')
+plt.colorbar()
+plt.title('Contour plot of $k(Atlantis, Elysium) = e^{-(Atlantis^2 + Elysium^2)} \cdot \sin(Atlantis) \cdot \cos(Elysium)$')
+plt.xlabel('$Atlantis$')
+plt.ylabel('$Elysium$')
+plt.show()
